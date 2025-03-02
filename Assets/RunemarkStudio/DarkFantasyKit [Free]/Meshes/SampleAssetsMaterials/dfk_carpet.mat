@@ -8,25 +8,24 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: dfk_carpet
-  m_Shader: {fileID: 4800000, guid: 5bdea20278144b11916d77503ba1467a, type: 3}
+  m_Shader: {fileID: 4800000, guid: 82139088fb0face48adf4d2b7ec62e3b, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _METALLICGLOSSMAP
+  - _NORMALMAP
+  m_InvalidKeywords:
   - _DIRECTIONAL_LIGHT
   - _HOVER_LIGHT
   - _NORMAL_MAP
   - _REFLECTIONS
   - _SPECULAR_HIGHLIGHTS
-  m_InvalidKeywords:
-  - _METALLICGLOSSMAP
-  - _NORMALMAP
   - _STENCIL
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
-  stringTagMap:
-    RenderType: Opaque
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -94,9 +93,14 @@ Material:
     - _BorderMinValue: 0.1
     - _BorderWidth: 0.1
     - _BumpScale: 1
+    - _ClipPlaneEnabled: 0
+    - _ClipPlaneSide: 1
+    - _ClipSide: 1
     - _ClippingBorder: 0
     - _ClippingBorderWidth: 0.025
+    - _ClippingPlane: 0
     - _ColorWriteMask: 15
+    - _Cull: 2
     - _CullMode: 2
     - _CustomMode: 0
     - _Cutoff: 0.5
@@ -146,6 +150,7 @@ Material:
     - _Refraction: 0
     - _RefractiveIndex: 0
     - _RenderQueueOverride: -1
+    - _RenderingMode: 0
     - _RimLight: 0
     - _RimPower: 0.25
     - _RoundCornerMargin: 0.01
@@ -157,9 +162,16 @@ Material:
     - _SphericalHarmonics: 0
     - _SrcBlend: 1
     - _Stencil: 1
+    - _StencilComp: 3
     - _StencilComparison: 3
+    - _StencilFail: 0
+    - _StencilOp: 0
     - _StencilOperation: 0
+    - _StencilReadMask: 255
+    - _StencilRef: 1
     - _StencilReference: 1
+    - _StencilWriteMask: 255
+    - _StencilZFail: 0
     - _TriplanarMappingBlendSharpness: 4
     - _UVSec: 0
     - _VertexColors: 0
@@ -171,6 +183,7 @@ Material:
     - _ZTest: 4
     - _ZWrite: 1
     m_Colors:
+    - _ClipPlane: {r: 0, g: 1.0000001, b: -0.00000011920929, a: 0.000000059604645}
     - _ClippingBorderColor: {r: 1, g: 0.19999996, b: 0, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
