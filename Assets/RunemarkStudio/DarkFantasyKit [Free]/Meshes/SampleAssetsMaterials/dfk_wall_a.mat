@@ -103,7 +103,7 @@ Material:
     - _Cull: 2
     - _CullMode: 2
     - _CustomMode: 0
-    - _Cutoff: 0.5
+    - _Cutoff: 0.479
     - _DetailNormalMapScale: 1
     - _DirectionalLight: 1
     - _DstBlend: 0
@@ -185,7 +185,7 @@ Material:
     - _ZTest: 4
     - _ZWrite: 1
     m_Colors:
-    - _ClipPlane: {r: 0, g: 1.0000001, b: -0.00000011920929, a: 0.000000059604645}
+    - _ClipPlane: {r: 0, g: -0.00000011920929, b: -1.0000001, a: -0.50000006}
     - _ClippingBorderColor: {r: 1, g: 0.19999996, b: 0, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

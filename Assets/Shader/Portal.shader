@@ -31,11 +31,6 @@ Shader "Custom/MRTKStyleStandard"
         [HideInInspector] _ZWrite("ZWrite", Float) = 1
         [HideInInspector] _BlendOp("Blend Operation", Float) = 0
         
-        // クリッピング関連のプロパティ
-        [Toggle(_CLIPPING_PLANE)] _ClippingPlane("Enable Clipping Plane", Float) = 0.0
-        _ClipPlane("Clip Plane", Vector) = (0, 1, 0, 0)
-        _ClipPlaneSide("Clip Plane Side", Float) = 1.0
-        
         // ステンシル関連のプロパティ
         [Space(20)]
         [Header(Stencil Settings)]
@@ -90,7 +85,6 @@ Shader "Custom/MRTKStyleStandard"
             // 機能の有効化
             #pragma shader_feature_local _NORMALMAP
             #pragma shader_feature_local _EMISSION
-            #pragma shader_feature_local _CLIPPING_PLANE
             #pragma shader_feature_local _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
             
             #include "UnityCG.cginc"
@@ -138,17 +132,6 @@ Shader "Custom/MRTKStyleStandard"
             float4 _EmissionColor;
             #endif
             
-            #if defined(_CLIPPING_PLANE)
-            float4 _ClipPlane;
-            float _ClipPlaneSide;
-            
-            inline float PointVsPlane(float3 worldPosition, float4 plane)
-            {
-                float3 planePosition = plane.xyz * plane.w;
-                return dot(worldPosition - planePosition, plane.xyz);
-            }
-            #endif
-            
             // UnpackScaleNormalの再定義
             float3 CustomUnpackScaleNormal(float4 packednormal, float scale)
             {
@@ -183,14 +166,6 @@ Shader "Custom/MRTKStyleStandard"
             
             fixed4 frag(v2f i) : SV_Target
             {
-                #if defined(_CLIPPING_PLANE)
-                float planeDistance = PointVsPlane(i.worldPos.xyz, _ClipPlane) * _ClipPlaneSide;
-                if (planeDistance < 0)
-                {
-                    discard;
-                }
-                #endif
-                
                 // 基本的なテクスチャサンプリング
                 fixed4 albedo = tex2D(_MainTex, i.uv) * _Color;
                 
@@ -272,7 +247,6 @@ Shader "Custom/MRTKStyleStandard"
             #pragma fragment frag
             #pragma target 3.0
             #pragma multi_compile_shadowcaster
-            #pragma shader_feature_local _CLIPPING_PLANE
             #pragma shader_feature_local _ALPHATEST_ON
             
             #include "UnityCG.cginc"
@@ -281,7 +255,6 @@ Shader "Custom/MRTKStyleStandard"
             {
                 V2F_SHADOW_CASTER;
                 float2 uv : TEXCOORD1;
-                float3 worldPos : TEXCOORD2;
             };
             
             sampler2D _MainTex;
@@ -289,36 +262,16 @@ Shader "Custom/MRTKStyleStandard"
             float4 _Color;
             float _Cutoff;
             
-            #if defined(_CLIPPING_PLANE)
-            float4 _ClipPlane;
-            float _ClipPlaneSide;
-            
-            inline float PointVsPlane(float3 worldPosition, float4 plane)
-            {
-                float3 planePosition = plane.xyz * plane.w;
-                return dot(worldPosition - planePosition, plane.xyz);
-            }
-            #endif
-            
             v2f vert(appdata_base v)
             {
                 v2f o;
                 TRANSFER_SHADOW_CASTER_NORMALOFFSET(o)
                 o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
-                o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
                 return o;
             }
             
             float4 frag(v2f i) : SV_Target
             {
-                #if defined(_CLIPPING_PLANE)
-                float planeDistance = PointVsPlane(i.worldPos.xyz, _ClipPlane) * _ClipPlaneSide;
-                if (planeDistance < 0)
-                {
-                    discard;
-                }
-                #endif
-                
                 #if defined(_ALPHATEST_ON)
                 fixed4 texColor = tex2D(_MainTex, i.uv);
                 clip(texColor.a * _Color.a - _Cutoff);
